@@ -1,123 +1,88 @@
-
 #include <iostream>
-#include <vector>
 using namespace std;
 
 class Product {
-private:
-    int productID;
+    int id;
     string name;
     int quantity;
-    double price;
+    int rate;
 
 public:
-    Product() {
-        productID = 0;
-        name = "Unknown";
-        quantity = 0;
-        price = 0.0;
+    void add(int idno, string naam, int qty, int r) {
+        id = idno;
+        name = naam;
+        quantity = qty;
+        rate = r;
     }
 
-    void setDetails(int id, string n, int q, double p) {
-        productID = id;
-        name = n;
-        quantity = q;
-        price = p;
+    int check(int idno) {
+        return id == idno;
     }
 
-    void updateQuantity(int newQuantity) {
-        quantity = newQuantity;
+    void updateQuantity(int qty) {
+        quantity += qty;
     }
 
-    double calculateTotalValue() const {
-        return quantity * price;
+    int getValue() {
+        return quantity * rate;
     }
 
-    void displayProduct() const {
-        cout << "ID: " << productID << ", Name: " << name << ", Quantity: " << quantity << ", Price: " << price << endl;
-    }
-
-    int getProductID() const {
-        return productID;
-    }
-};
-
-class Inventory {
-private:
-    vector<Product> products;
-
-public:
-    void addProduct() {
-        Product p;
-        int id, quantity;
-        string name;
-        double price;
-
-        cout << "Enter Product ID, Name, Quantity, and Price: ";
-        cin >> id >> name >> quantity >> price;
-        p.setDetails(id, name, quantity, price);
-        products.push_back(p);
-    }
-
-    void updateProductQuantity() {
-        int id, newQuantity;
-        cout << "Enter Product ID and new Quantity: ";
-        cin >> id >> newQuantity;
-
-        for (Product &product : products) {
-            if (product.getProductID() == id) {
-                product.updateQuantity(newQuantity);
-                cout << "Product quantity updated successfully!" << endl;
-                return;
-            }
-        }
-        cout << "Product not found!" << endl;
-    }
-
-    void calculateTotalInventoryValue() {
-        double totalValue = 0;
-        for (const Product &product : products) {
-            totalValue += product.calculateTotalValue();
-        }
-        cout << "Total Inventory Value: " << totalValue << endl;
-    }
-
-    void displayInventory() {
-        for (const Product &product : products) {
-            product.displayProduct();
-        }
+    void display() {
+        cout << "ID: " << id << ", Name: " << name << ", Quantity: " << quantity << ", Rate: " << rate << ", Value: " << getValue() << endl;
     }
 };
 
 int main() {
-    Inventory storeInventory;
+    Product p[100];
+    int productCount = 0;
     int choice;
 
     do {
-        cout << "\n1. Add Product\n2. Update Quantity\n3. Display Inventory\n4. Calculate Total Value\n5. Exit\nEnter choice: ";
+        cout << "\n1. Add/Update Product\n2. View Inventory\n3. Total Inventory Value\n4. Exit\nEnter your choice: ";
         cin >> choice;
 
-        switch (choice) {
-            case 1:
-                storeInventory.addProduct();
-                break;
-            case 2:
-                storeInventory.updateProductQuantity();
-                break;
-            case 3:
-                storeInventory.displayInventory();
-                break;
-            case 4:
-                storeInventory.calculateTotalInventoryValue();
-                break;
-            case 5:
-                cout << "Exiting..." << endl;
-                break;
-            default:
-                cout << "Invalid choice! Try again." << endl;
+        if (choice == 1) {
+            int id, rate, qty;
+            string name;
+            cout << "Enter Product ID: ";
+            cin >> id;
+            cout << "Enter Product Name: ";
+            cin >> name;
+            cout << "Enter Quantity: ";
+            cin >> qty;
+            cout << "Enter Rate: ";
+            cin >> rate;
+
+            bool found = false;
+            for (int i = 0; i < productCount; i++) {
+                if (p[i].check(id)) {
+                    p[i].updateQuantity(qty);
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                p[productCount].add(id, name, qty, rate);
+                productCount++;
+            }
         }
-    } while (choice != 5);
+
+        else if (choice == 2) {
+            for (int i = 0; i < productCount; i++) {
+                p[i].display();
+            }
+        }
+
+        else if (choice == 3) {
+            int total = 0;
+            for (int i = 0; i < productCount; i++) {
+                total += p[i].getValue();
+            }
+            cout << "Total Inventory Value: " << total << endl;
+        }
+
+    } while (choice != 4);
 
     return 0;
 }
-
