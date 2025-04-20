@@ -69,7 +69,7 @@ int main()
     {
     cout<<"Enter 1 to add student"<<endl;
     cout<<"Enter 2 to dislpay Student average marks"<<endl;
-    cout<<"Enter 3 to dislpay entire student deatils"<<endl;
+    cout<<"Enter 3 to dislpay entire student details"<<endl;
     cout<<"Enter 0 to exit"<<endl;
     cout<<"Enter your choice : ";
     cin >>choice;
@@ -98,7 +98,7 @@ int main()
             break;
         case 3:
 
-            cout<<"Enter student ID to dislpay his/her deatils : ";
+            cout<<"Enter student ID to dislpay his/her details : ";
             cin >> temp;
             for(int i=0 ; i<studentcount ; i++)
             {
@@ -114,7 +114,7 @@ int main()
             }
             break;
         case 0:
-            cout<<"HAVE A GOOD DAY"<<endl;
+            cout<<"thank you"<<endl;
             break;
         default :
             cout<<"Please retry"<<endl;
