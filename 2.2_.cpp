@@ -44,7 +44,7 @@ class Student
         cout<<"Name : "<<name<<endl;
         cout<<"Marks Obtained"<<endl;
         cout<<"Maths : "<<marks[0]<<endl;
-        cout<<"Physcis : " << marks[1]<<endl;
+        cout<<"Physics : " << marks[1]<<endl;
         cout<<"Chmistry : "<<marks[2]<<endl;
     }
     int check(int roll)
